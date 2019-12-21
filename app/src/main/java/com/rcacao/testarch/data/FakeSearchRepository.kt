@@ -5,7 +5,7 @@ import kotlinx.coroutines.delay
 class FakeSearchRepository : SearchRepository {
     override suspend fun isValidCode(code: String): Boolean {
         delay(2000)
-        val regex = "d{4}".toRegex()
+        val regex = "\\d{4}".toRegex()
         return regex.matches(code)
     }
 

@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import com.google.android.material.snackbar.Snackbar
 import com.rcacao.testarch.R
+import com.rcacao.testarch.util.EventObserver
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -32,13 +33,19 @@ class SearchActivity : AppCompatActivity() {
                 is SearchState.Success -> showSuccessMessage(it.message)
                 is SearchState.Error -> showErrorMessage(it.message)
                 is SearchState.Loading -> showLoading(true)
-                is SearchState.InvalidCode -> showInvalidCodeError()
             }
+        })
+
+        viewModel.event.observe(this, EventObserver {
+            showInvalidCodeError(it)
         })
     }
 
-    private fun showInvalidCodeError() {
-        Snackbar.make(root,getString(R.string.invalid_code),Snackbar.LENGTH_LONG).show()
+    private fun showInvalidCodeError(messageId: Int?) {
+        showLoading(false)
+        messageId?.let {
+            Snackbar.make(root, getString(messageId), Snackbar.LENGTH_LONG).show()
+        }
     }
 
     private fun showSuccessMessage(message: String) {
