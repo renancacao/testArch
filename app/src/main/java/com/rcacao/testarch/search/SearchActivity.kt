@@ -12,13 +12,17 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 class SearchActivity : AppCompatActivity() {
 
-    private val viewModel: SearchViewModel by viewModels()
+    private val viewModel: SearchViewModel by viewModels { SearchViewModelFactory() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        btSearch.setOnClickListener { viewModel.searchCode(edCode.text.toString()) }
+        btSearch.setOnClickListener { searchCode() }
         subscribe()
+    }
+
+    private fun searchCode() {
+        viewModel.searchCode(edCode.text.toString())
     }
 
     private fun subscribe() {
