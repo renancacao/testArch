@@ -32,7 +32,7 @@ class FakeSearchRepository : SearchRepository {
                     "Usuário Bloqueado!"
                 )
             )
-            else -> ResultSearch.Error(Exception("User not found"))
+            else -> ResultSearch.Error(Exception("Usuário não encontrado"))
         }
     }
 
