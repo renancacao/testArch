@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Test Arch</string>
+    <string name="enter_code">Informe o código</string>
+    <string name="search">Pesquisar</string>
+</resources>
