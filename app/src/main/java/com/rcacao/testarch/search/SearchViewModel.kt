@@ -1,14 +1,14 @@
-package com.rcacao.testarch
+package com.rcacao.testarch.search
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
+import com.rcacao.testarch.domain.SearchCodeUseCase
+import com.rcacao.testarch.data.FakeSearchRepository
 import kotlinx.coroutines.launch
 
 class SearchViewModel : ViewModel() {
 
-    private val searchCodeUseCase = SearchCodeUseCase(SearchRepository())
+    private val searchCodeUseCase =
+        SearchCodeUseCase(FakeSearchRepository())
     private val _state = MutableLiveData<SearchState>()
     var state: LiveData<SearchState>
 
@@ -18,7 +18,6 @@ class SearchViewModel : ViewModel() {
 
     fun searchCode(code: String) {
 
-        _state.value = SearchState.Clean
         _state.value = SearchState.Loading
 
         viewModelScope.launch {

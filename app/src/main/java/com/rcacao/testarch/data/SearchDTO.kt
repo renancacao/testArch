@@ -1,4 +1,4 @@
-package com.rcacao.testarch
+package com.rcacao.testarch.data
 
 data class SearchDTO constructor(var result: String = "", var message: String = "") {
 

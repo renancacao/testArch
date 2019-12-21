@@ -1,11 +1,13 @@
-package com.rcacao.testarch
+package com.rcacao.testarch.domain
 
+import com.rcacao.testarch.data.ResultSearch
+import com.rcacao.testarch.data.SearchDTO
+import com.rcacao.testarch.search.SearchState
 
-class SearchCodeUseCase(private val repository: SearchRepository) {
+class SearchResultMapper {
 
-    suspend operator fun invoke(code: String): SearchState {
-
-        return when (val searchResult = repository.search(code)) {
+    fun map(searchResult: ResultSearch<SearchDTO>): SearchState {
+        return when (searchResult) {
 
             is ResultSearch.Success -> {
                 when (searchResult.data.result) {
@@ -15,10 +17,10 @@ class SearchCodeUseCase(private val repository: SearchRepository) {
                     else -> SearchState.Error("Estado do usuário não localizado")
                 }
             }
-            is ResultSearch.Error -> SearchState.Error(searchResult.exception.message ?: "Internal Error")
-            else -> SearchState.Error("unexpected error")
+            is ResultSearch.Error -> SearchState.Error(
+                searchResult.exception.message ?: "Internal Error"
+            )
         }
     }
+
 }
-
-

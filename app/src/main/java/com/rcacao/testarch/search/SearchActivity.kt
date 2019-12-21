@@ -1,25 +1,22 @@
-package com.rcacao.testarch
+package com.rcacao.testarch.search
 
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
+import com.rcacao.testarch.R
 import kotlinx.android.synthetic.main.activity_main.*
-import androidx.lifecycle.ViewModelProviders
-
 
 
 class SearchActivity : AppCompatActivity() {
 
-    private lateinit var viewModel: SearchViewModel
+    private val viewModel: SearchViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
         btSearch.setOnClickListener { viewModel.searchCode(edCode.text.toString()) }
         subscribe()
     }
@@ -30,7 +27,6 @@ class SearchActivity : AppCompatActivity() {
                 is SearchState.Success -> showSuccessMessage(it.message)
                 is SearchState.Error -> showErrorMessage(it.message)
                 is SearchState.Loading -> showLoading(true)
-                is SearchState.Clean -> cleanMessage()
             }
         })
     }
@@ -43,6 +39,7 @@ class SearchActivity : AppCompatActivity() {
 
     private fun showLoading(show: Boolean) {
         if (show) {
+            cleanMessage()
             progressBar.visibility = View.VISIBLE
         } else {
             progressBar.visibility = View.GONE
