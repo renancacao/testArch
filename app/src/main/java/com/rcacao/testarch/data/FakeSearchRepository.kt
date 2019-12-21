@@ -3,6 +3,8 @@ package com.rcacao.testarch.data
 import kotlinx.coroutines.delay
 
 class FakeSearchRepository : SearchRepository {
+
+    //Num caso real, esse retorno seria através de uma API, ou ficaria no UseCase correspondente
     override suspend fun isValidCode(code: String): Boolean {
         delay(2000)
         val regex = "\\d{4}".toRegex()
