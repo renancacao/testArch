@@ -3,12 +3,15 @@ package com.rcacao.testarch.data
 import kotlinx.coroutines.delay
 
 class FakeSearchRepository : SearchRepository {
+    override suspend fun isValidCode(code: String): Boolean {
+        delay(2000)
+        val regex = "d{4}".toRegex()
+        return regex.matches(code)
+    }
 
     override suspend fun search(code: String): ResultSearch<SearchDTO> {
-
         delay(1500)
-
-       return when (code) {
+        return when (code) {
             FAKE_OK -> ResultSearch.Success(
                 SearchDTO(
                     SearchDTO.RESULT_OK,
@@ -21,13 +24,13 @@ class FakeSearchRepository : SearchRepository {
                     "Usuário Inativo!"
                 )
             )
-            FAKE_BLOCKED ->  ResultSearch.Success(
+            FAKE_BLOCKED -> ResultSearch.Success(
                 SearchDTO(
                     SearchDTO.RESULT_BLOCKED,
                     "Usuário Bloqueado!"
                 )
             )
-            else ->  ResultSearch.Error(Exception("User not found"))
+            else -> ResultSearch.Error(Exception("User not found"))
         }
     }
 
