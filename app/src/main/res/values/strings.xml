@@ -2,4 +2,5 @@
     <string name="app_name">Test Arch</string>
     <string name="enter_code">Informe o código</string>
     <string name="search">Pesquisar</string>
+    <string name="invalid_code">O código informado é inválido!</string>
 </resources>
